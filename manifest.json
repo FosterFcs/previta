@@ -1,0 +1,13 @@
+{
+  "name": "PREVITA – Prevenção + Vida",
+  "short_name": "PREVITA",
+  "description": "Controle seus remédios e cuide da sua saúde",
+  "start_url": "/previta/",
+  "display": "standalone",
+  "background_color": "#1a7a4a",
+  "theme_color": "#1a7a4a",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "previta-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
