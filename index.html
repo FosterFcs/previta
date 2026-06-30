@@ -7,8 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="PREVITA">
 <title>PREVITA – Prevenção + Vida</title>
-<link rel="apple-touch-icon" sizes="512x512" href="https://fosterfcs.github.io/previta/icon.png">
-<link rel="icon" type="image/png" href="https://fosterfcs.github.io/previta/icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
+<!-- Tesseract.js: biblioteca de OCR gratuita que roda no navegador -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 :root {
@@ -20,7 +22,6 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-height:100vh;max-width:480px;margin:0 auto;padding-bottom:84px;}
 
-/* HEADER DINÂMICO */
 .header{color:white;padding:16px 16px 18px;position:sticky;top:0;z-index:100;border-radius:0 0 22px 22px;box-shadow:0 4px 20px rgba(0,0,0,0.25);transition:background 1s;}
 .header-manha{background:linear-gradient(135deg,#1a7a4a,#0d4f2e);}
 .header-tarde{background:linear-gradient(135deg,#1565c0,#0d3c7a);}
@@ -38,25 +39,21 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .badge-alerta{background:var(--laranja);color:white;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:800;margin-left:auto;}
 .btn-alarme{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:9px;padding:4px 10px;font-size:16px;cursor:pointer;flex-shrink:0;}
 
-/* NAV */
 .nav-tabs{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;display:flex;border-top:1px solid #e5e7eb;box-shadow:0 -4px 20px rgba(0,0,0,0.08);z-index:200;overflow-x:auto;}
 .tab-btn{flex:1;padding:9px 2px 7px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--cinza-texto);font-family:'Nunito',sans-serif;font-size:8px;font-weight:700;white-space:nowrap;min-width:42px;}
 .tab-btn.ativa{color:var(--verde);}
 .tab-btn .icon{font-size:17px;}
 
-/* TELAS */
 .tela{display:none;padding:14px;}
 .tela.ativa{display:block;}
 .card{background:white;border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--sombra);}
 .card-titulo{font-size:14px;font-weight:800;color:var(--verde);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
 
-/* BANNER INFORMATIVO */
 .banner-info{background:linear-gradient(135deg,#1a7a4a,#0d4f2e);border-radius:14px;padding:14px 16px;margin-bottom:12px;color:white;text-align:center;}
 .banner-info h3{font-size:14px;font-weight:900;margin-bottom:5px;}
 .banner-info p{font-size:11px;font-weight:600;opacity:0.9;line-height:1.6;}
 .banner-info small{font-size:9px;opacity:0.7;display:block;margin-top:4px;}
 
-/* PERÍODO DO DIA */
 .periodo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;}
 .periodo-box{border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;border:3px solid transparent;transition:all 0.2s;}
 .periodo-box.manha{background:linear-gradient(160deg,#fff8e1,#ffe082);}
@@ -69,7 +66,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .periodo-box.sel-tarde{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,0.2);}
 .periodo-box.sel-noite{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.2);}
 
-/* REMÉDIO */
 .remedio-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--cinza);}
 .remedio-item:last-child{border-bottom:none;padding-bottom:0;}
 .remedio-periodo{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:46px;}
@@ -83,7 +79,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .check-btn{width:36px;height:36px;border-radius:10px;border:2px solid #d1d5db;background:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
 .check-btn.tomado{background:var(--verde);border-color:var(--verde);}
 
-/* AGENDA */
 .agenda-periodo-titulo{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;margin-bottom:8px;font-size:14px;font-weight:800;}
 .agenda-item{display:flex;align-items:center;gap:12px;padding:11px 12px;background:var(--cinza);border-radius:12px;margin-bottom:6px;cursor:pointer;}
 .agenda-hora{font-size:14px;font-weight:900;color:var(--verde);min-width:48px;text-align:center;}
@@ -92,7 +87,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .agenda-dose{font-size:11px;color:var(--cinza-texto);font-weight:600;}
 .agenda-status{font-size:20px;}
 
-/* CONSULTAS */
 .consulta-card{background:white;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--sombra);border-left:4px solid var(--verde);display:flex;align-items:flex-start;gap:12px;}
 .consulta-data-box{background:var(--verde);color:white;border-radius:10px;padding:8px 10px;text-align:center;min-width:50px;flex-shrink:0;}
 .consulta-dia{font-size:22px;font-weight:900;line-height:1;}
@@ -103,7 +97,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .badge-ag{background:var(--verde-claro);color:var(--verde);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:800;margin-top:6px;display:inline-block;}
 .badge-re{background:#e8f0ff;color:#3b5bdb;border-radius:8px;padding:3px 10px;font-size:11px;font-weight:800;margin-top:6px;display:inline-block;}
 
-/* PACIENTES */
 .paciente-card{background:white;border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--sombra);display:flex;align-items:center;gap:12px;cursor:pointer;}
 .paciente-avatar{width:46px;height:46px;border-radius:50%;background:var(--verde-claro);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .paciente-info{flex:1;}
@@ -118,7 +111,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .receita-item:last-child{border-bottom:none;}
 .receita-badge{display:inline-flex;align-items:center;gap:4px;background:#fff3e8;color:var(--laranja);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:800;margin-top:6px;}
 
-/* MEMBROS */
 .membro-card{background:white;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--sombra);display:flex;align-items:center;gap:14px;}
 .membro-avatar{width:50px;height:50px;border-radius:50%;background:var(--verde-claro);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;border:3px solid var(--verde);}
 .membro-info{flex:1;}
@@ -127,7 +119,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .membro-contato{font-size:12px;color:var(--cinza-texto);font-weight:600;margin-top:3px;}
 .membro-area{display:inline-block;background:var(--verde-claro);color:var(--verde);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:800;margin-top:6px;}
 
-/* DICAS */
 .dica-card{background:white;border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:var(--sombra);border-left:4px solid var(--laranja);}
 .dica-tag{display:inline-block;background:var(--laranja-claro);color:var(--laranja);border-radius:8px;padding:3px 10px;font-size:11px;font-weight:800;margin-bottom:8px;}
 .dica-titulo{font-size:15px;font-weight:800;margin-bottom:6px;}
@@ -136,7 +127,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .dica-filtro{padding:8px 14px;border-radius:20px;border:2px solid #e5e7eb;background:white;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Nunito',sans-serif;color:var(--texto);flex-shrink:0;}
 .dica-filtro.ativo{background:var(--verde);color:white;border-color:var(--verde);}
 
-/* GUIA */
 .guia-secao{background:white;border-radius:14px;margin-bottom:10px;box-shadow:var(--sombra);overflow:hidden;}
 .guia-header{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;user-select:none;}
 .guia-icon-box{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
@@ -154,8 +144,7 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .guia-alerta{background:#fff3e8;border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12px;font-weight:700;color:#c2410c;display:flex;gap:8px;align-items:flex-start;}
 .guia-dica{background:var(--verde-claro);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12px;font-weight:700;color:#145c38;display:flex;gap:8px;align-items:flex-start;}
 
-/* ASSISTENTE */
-.ia-chat{min-height:200px;max-height:320px;overflow-y:auto;margin-bottom:12px;}
+.ia-chat{min-height:200px;max-height:340px;overflow-y:auto;margin-bottom:12px;}
 .msg{margin-bottom:10px;display:flex;flex-direction:column;}
 .msg.user{align-items:flex-end;}
 .msg.ia{align-items:flex-start;}
@@ -170,12 +159,10 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 
-/* BOTÕES */
 .btn-verde{width:100%;padding:14px;background:var(--verde);color:white;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Nunito',sans-serif;}
 .btn-laranja{background:var(--laranja);color:white;border:none;border-radius:12px;padding:11px 18px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;}
 .btn-vermelho{background:#ef4444;color:white;border:none;border-radius:12px;padding:10px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;}
 
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;align-items:flex-end;justify-content:center;}
 .modal-overlay.aberto{display:flex;}
 .modal{background:white;border-radius:24px 24px 0 0;width:100%;max-width:480px;padding:22px 18px 30px;max-height:88vh;overflow-y:auto;position:relative;}
@@ -190,7 +177,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .horario-toggle.sel{background:var(--verde-claro);border-color:var(--verde);color:var(--verde);}
 .modal-fechar{position:absolute;top:14px;right:18px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--cinza-texto);}
 
-/* PERFIL */
 .perfil-avatar{width:78px;height:78px;border-radius:50%;background:var(--verde-claro);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 12px;border:3px solid var(--verde);}
 .tipo-select-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0;}
 .tipo-select-btn{padding:12px 6px;border:2px solid #e5e7eb;border-radius:12px;background:white;cursor:pointer;text-align:center;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:var(--texto);}
@@ -206,7 +192,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .tipo-cuidador{background:var(--laranja);color:white;}
 .tipo-paciente{background:#e8f0ff;color:#3b5bdb;}
 
-/* STATS */
 .stats-row{display:flex;gap:10px;margin-bottom:12px;}
 .stat-box{flex:1;background:white;border-radius:14px;padding:12px;text-align:center;box-shadow:var(--sombra);}
 .stat-num{font-size:26px;font-weight:900;color:var(--verde);}
@@ -218,6 +203,7 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 .rodape strong{color:var(--verde);}
 .rodape a{color:var(--laranja);text-decoration:none;}
 .offline-badge{background:#e8f5ee;color:#145c38;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;text-align:center;margin-bottom:10px;}
+.online-badge{background:#e0f2fe;color:#0369a1;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;text-align:center;margin-bottom:10px;}
 @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.15)}}
 </style>
 </head>
@@ -252,7 +238,6 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 
 <!-- REMÉDIOS -->
 <div class="tela ativa" id="tela-remedios">
-  <!-- BANNER INFORMATIVO -->
   <div class="banner-info" style="margin-top:14px;">
     <h3>💊 Cuide-se com PREVITA</h3>
     <p>Controle seus remédios, acompanhe consultas<br>e cuide da sua saúde no dia a dia.</p>
@@ -358,16 +343,21 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
         <div style="font-size:10px;opacity:0.8;font-weight:600;">UBS São Pedro – Santana de Parnaíba – SP</div>
       </div>
     </div>
-    <div style="font-size:11px;opacity:0.85;font-weight:600;">Fotografe sua receita ou cole os nomes dos remédios. O PREVITA cria os alertas automaticamente!</div>
+    <div style="font-size:11px;opacity:0.85;font-weight:600;">Fotografe sua receita — o app lê e cadastra os remédios automaticamente!</div>
   </div>
 
   <div class="card">
-    <div class="card-titulo">📷 Fotografar Receita Física</div>
-    <div style="font-size:12px;color:var(--cinza-texto);font-weight:600;margin-bottom:10px;">Tire uma foto da receita médica — o app identifica os remédios!</div>
+    <div class="card-titulo">📷 Fotografar Receita — Leitura Automática</div>
+    <div style="font-size:12px;color:var(--cinza-texto);font-weight:600;margin-bottom:10px;">Tire uma foto da receita médica — funciona melhor com receitas digitadas/impressas (ex: portal da Prefeitura).</div>
     <input type="file" id="receitaFotoInput" accept="image/*" capture="environment" style="display:none" onchange="previewReceitaFoto(this)">
     <button class="btn-verde" onclick="document.getElementById('receitaFotoInput').click()" style="margin-bottom:8px;">📷 Abrir Câmera / Galeria</button>
     <img id="receitaFotoPreview" style="display:none;width:100%;border-radius:10px;margin-top:8px;" alt="Receita">
-    <div id="receitaFotoStatus" style="display:none;text-align:center;padding:10px;font-size:13px;font-weight:700;color:var(--verde);">📋 Foto carregada! Cole os nomes abaixo para processar.</div>
+    <div id="receitaFotoStatus" style="display:none;text-align:center;padding:12px;font-size:13px;font-weight:700;border-radius:10px;margin-top:8px;"></div>
+    <div id="ocrProgressWrap" style="display:none;margin-top:8px;">
+      <div style="height:8px;background:var(--cinza);border-radius:10px;overflow:hidden;">
+        <div id="ocrProgressBar" style="height:100%;background:var(--verde);width:0%;transition:width 0.2s;"></div>
+      </div>
+    </div>
   </div>
 
   <div class="card">
@@ -394,10 +384,9 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
   <div class="card" style="background:var(--verde-claro);border:2px solid var(--verde);">
     <div style="font-size:12px;font-weight:800;color:var(--verde);margin-bottom:6px;">💡 Como usar</div>
     <div style="font-size:11px;color:var(--cinza-texto);font-weight:600;line-height:1.8;">
-      1. Acesse o portal da Prefeitura de Santana de Parnaíba<br>
-      2. Veja seus <strong>Medicamentos Retirados</strong><br>
-      3. Copie os nomes e cole acima<br>
-      4. Clique em <strong>Adicionar</strong> — os alertas são criados! 🔔
+      📷 <strong>Foto:</strong> Funciona melhor com letra digitada/impressa<br>
+      ⌨️ <strong>Texto:</strong> Cole a lista do portal da Prefeitura — sempre o método mais preciso<br>
+      ✅ Confirme os remédios e clique em Importar 🔔
     </div>
   </div>
 
@@ -446,15 +435,19 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 <div class="tela" id="tela-ia">
   <div class="card" style="margin-top:14px;">
     <div class="card-titulo">🤖 PREV – Assistente de Saúde</div>
-    <div class="offline-badge">📴 Funciona 100% offline — sem internet!</div>
-    <p style="font-size:12px;color:var(--cinza-texto);margin-bottom:12px;font-weight:600;">Tire dúvidas sobre remédios, horários, efeitos colaterais e mais.</p>
+    <div style="display:flex;gap:6px;margin-bottom:10px;">
+      <div class="offline-badge" style="flex:1;margin:0;">📴 Base offline</div>
+      <div class="online-badge" style="flex:1;margin:0;">🌐 Pesquisa online</div>
+    </div>
+    <p style="font-size:12px;color:var(--cinza-texto);margin-bottom:12px;font-weight:600;">Tire dúvidas sobre remédios — resposta offline ou pesquise online para informações atualizadas.</p>
     <div class="ia-chat" id="iaChat">
-      <div class="msg ia"><div class="msg-bubble">Olá! 👋 Sou o PREV, assistente do PREVITA e funciono <strong>sem internet</strong>.<br><br>Pode me perguntar sobre remédios, horários, efeitos colaterais, interações e dicas de saúde. 😊</div></div>
+      <div class="msg ia"><div class="msg-bubble">Olá! 👋 Sou o PREV, assistente do PREVITA.<br><br>Posso responder <strong>offline</strong> sobre remédios comuns, ou <strong>pesquisar online</strong> qualquer remédio para informações atualizadas! 😊<br><br>Digite o nome do remédio ou sua dúvida!</div></div>
     </div>
     <div class="ia-input-row">
-      <input class="ia-input" id="iaInput" placeholder="Digite sua dúvida..." onkeypress="if(event.key==='Enter')enviarIA()">
+      <input class="ia-input" id="iaInput" placeholder="Digite o remédio ou dúvida..." onkeypress="if(event.key==='Enter')enviarIA()">
       <button class="btn-enviar" onclick="enviarIA()">➤</button>
     </div>
+    <button id="btnPesquisarOnline" onclick="pesquisarOnline()" style="display:none;width:100%;margin-top:8px;padding:12px;background:#e0f2fe;color:#0369a1;border:2px solid #0369a1;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif;">🌐 Pesquisar online sobre este remédio</button>
   </div>
   <div class="card">
     <div class="card-titulo">💡 Perguntas rápidas</div>
@@ -607,6 +600,13 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 </div>
 
 <script>
+// =====================================================================
+// CONFIGURAÇÃO — URL DO SEU WORKER NO CLOUDFLARE
+// Depois de publicar o Worker, troque a linha abaixo pela URL real,
+// algo como: 'https://previta-prev.SEUUSUARIO.workers.dev'
+// =====================================================================
+const WORKER_URL = 'https://still-silence-1a38.previtasaude-app.workers.dev';
+
 // ===== DADOS =====
 let remedios=JSON.parse(localStorage.getItem('pv_remedios')||'[]');
 let tomadosHoje=JSON.parse(localStorage.getItem('pv_tomados_'+hoje())||'{}');
@@ -616,6 +616,7 @@ let membros=JSON.parse(localStorage.getItem('pv_membros')||'null');
 let pacientes=JSON.parse(localStorage.getItem('pv_pacientes')||'null');
 let ultimosAlertas=JSON.parse(localStorage.getItem('pv_alertas_'+hoje())||'{}');
 let horasSel=[],periodoSel='',tipoSelecionado='',deferredPrompt=null,audioCtx=null;
+let ultimaPerguntaIA = '';
 
 if(!membros){membros=[{id:1,nome:'Wilson Foster',cargo:'ACS – Agente Comunitário de Saúde',area:'Microárea 09',tel:'(11) 93959-1627'},{id:2,nome:'Dra. Ana Paula',cargo:'Médico(a)',area:'UBS São Pedro',tel:'Ramal 201'},{id:3,nome:'Enf. Carla Santos',cargo:'Enfermeiro(a)',area:'UBS São Pedro',tel:'Ramal 202'}];localStorage.setItem('pv_membros',JSON.stringify(membros));}
 if(!pacientes){pacientes=[{id:1,nome:'Dona Maria das Graças',end:'Rua Ipê Amarelo, 14',tel:'(11) 9 8765-4321',condicao:'Diabetes + Hipertensão',meds:'Losartana, Metformina, AAS',receitaImg:''},{id:2,nome:'Sr. José Antônio',end:'Av. São Pedro, 78',tel:'(11) 9 7654-3210',condicao:'Hipertensão',meds:'Enalapril, Hidroclorotiazida',receitaImg:''},{id:3,nome:'Dona Conceição Lima',end:'Rua das Palmeiras, 3',tel:'(11) 9 6543-2109',condicao:'Hipotireoidismo',meds:'Levotiroxina',receitaImg:''}];localStorage.setItem('pv_pacientes',JSON.stringify(pacientes));}
@@ -694,7 +695,6 @@ function getPeriodo(){
   if(h>=12&&h<18)return{classe:'header-tarde',icone:'☀️',saudacao:'Boa tarde!'};
   return{classe:'header-noite',icone:'🌙',saudacao:'Boa noite!'};
 }
-
 function atualizarHeader(){
   const now=new Date();
   const dias=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
@@ -725,7 +725,6 @@ function irPara(tela,btn){
   if(tela==='guia')renderGuia();
   if(tela==='usuario')renderPerfil();
 }
-
 function mostrarSubAgenda(sub){
   document.getElementById('subAgendaRemedios').style.display=sub==='remedios'?'block':'none';
   document.getElementById('subAgendaConsultas').style.display=sub==='consultas'?'block':'none';
@@ -766,7 +765,6 @@ function renderRemedios(){
   }
   atualizarStats();
 }
-
 function marcarTodos(id){
   const r=remedios.find(x=>x.id===id);if(!r)return;
   const todos=(r.horarios||[]).every(h=>tomadosHoje[id+'_'+h]);
@@ -774,7 +772,6 @@ function marcarTodos(id){
   localStorage.setItem('pv_tomados_'+hoje(),JSON.stringify(tomadosHoje));
   renderRemedios();atualizarHeader();
 }
-
 function atualizarStats(){
   let tom=0,pend=0;
   remedios.forEach(r=>(r.horarios||[]).forEach(h=>{if(tomadosHoje[r.id+'_'+h])tom++;else pend++;}));
@@ -782,7 +779,6 @@ function atualizarStats(){
   document.getElementById('statTomados').textContent=tom;
   document.getElementById('statPendentes').textContent=pend;
 }
-
 function abrirModal(){
   horasSel=[];periodoSel='';
   ['mNome','mDose','mObs'].forEach(id=>document.getElementById(id).value='');
@@ -834,7 +830,6 @@ function renderAgenda(){
   document.getElementById('progrBar').style.width=total?`${Math.round(tom/total*100)}%`:'0%';
   document.getElementById('progrMsg').textContent=total===0?'Cadastre seus remédios!':tom===total?'🎉 Todos tomados hoje!':tom===0?'💪 Vamos começar!':'Faltam '+(total-tom)+` dose${total-tom>1?'s':''} para completar`;
 }
-
 function marcarItem(key){
   if(tomadosHoje[key])delete tomadosHoje[key];else tomadosHoje[key]=true;
   localStorage.setItem('pv_tomados_'+hoje(),JSON.stringify(tomadosHoje));
@@ -978,78 +973,263 @@ function renderGuia(){
 }
 function toggleGuia(id){const c=document.getElementById('corpo_'+id),s=document.getElementById('seta_'+id);const a=c.classList.toggle('aberto');s.classList.toggle('aberto',a);}
 
-// ===== ASSISTENTE OFFLINE =====
+// ===== BASE DE CONHECIMENTO OFFLINE =====
 const BASE=[
   {t:['ola','olá','oi','bom dia','boa tarde','boa noite','tudo bem'],r:'Olá! 😊 Sou o PREV, assistente de saúde do PREVITA.\n\nPosso te ajudar com:\n💊 Informações sobre remédios\n⏰ Horários ideais\n⚠️ Efeitos colaterais e interações\n🩺 Dicas de saúde\n\nDigite o nome do seu remédio ou sua dúvida!'},
-  {t:['obrigad','valeu','obg','thx'],r:'De nada! 😊 Cuide-se bem e não esqueça os remédios! 💊'},
+  {t:['obrigad','valeu','obg'],r:'De nada! 😊 Cuide-se bem e não esqueça os remédios! 💊'},
   {t:['metformina','glicofage','dimefor'],r:'A **Metformina** é para **diabetes tipo 2**.\n\n✅ Tome JUNTO com as refeições — evita náuseas\n⚠️ Nunca tome com estômago vazio\n💊 Efeitos comuns: náusea, diarreia no início (passam)\n⚠️ Não tome se for fazer exame com contraste\n\n⚕️ Siga sempre a orientação do seu médico.'},
   {t:['losartana','cozaar'],r:'A **Losartana** é para **pressão alta**.\n\n✅ Tome com ou sem alimentos\n⚠️ Evite excesso de potássio (banana, laranja, batata)\n⚠️ Não use na gravidez\n💊 Pode causar tontura no início — levante devagar\n⏰ Melhor horário: manhã\n\n⚕️ Consulte sempre seu médico.'},
   {t:['levotiroxina','puran','euthyrox','tireoide','tireóide','hipotireoidismo','tiroxina'],r:'A **Levotiroxina** trata o **hipotireoidismo** (tireoide lenta).\n\n✅ Tome EM JEJUM, 30-60 min antes do café\n⚠️ Não tome com leite, café, cálcio ou ferro\n💊 Dose errada causa coração acelerado ou cansaço\n🔬 Repita o TSH a cada 6 meses\n\n⚕️ Não mude a dose sem o médico.'},
   {t:['enalapril','vasopril'],r:'O **Enalapril** é para **pressão alta** e insuficiência cardíaca.\n\n✅ Tome com ou sem alimentos\n⚠️ Não use na gravidez\n💊 Efeito comum: tosse seca persistente — informe ao médico\n⏰ Melhor horário: manhã\n\n⚕️ Siga sempre a orientação médica.'},
   {t:['aas','aspirina','ácido acetilsalicílico','acido acetilsalicilico'],r:'O **AAS / Aspirina** em baixa dose previne coágulos e problemas cardíacos.\n\n✅ Tome após as refeições\n⚠️ Pode irritar o estômago\n⚠️ Evite se tiver sangramento ou cirurgia próxima\n⚠️ Nunca dê para crianças com febre\n\n⚕️ Consulte sempre seu médico.'},
   {t:['hidroclorotiazida','clorotiazida','diurético','diuretico'],r:'A **Hidroclorotiazida** é diurética para **pressão alta**.\n\n✅ Tome DE MANHÃ — evita acordar à noite\n⚠️ Pode baixar potássio — coma banana, laranja\n💊 Mais urina no início é normal\n⚠️ Beba bastante água\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['omeprazol','losec','pantoprazol','pantocal','esomeprazol','refluxo','gastrite','estomago','estômago'],r:'O **Omeprazol / Pantoprazol** protege o estômago e trata refluxo e gastrite.\n\n✅ Tome EM JEJUM, 30 min antes do café\n⚠️ Uso prolongado pode reduzir cálcio e vitamina B12\n💊 Não tome mais de 8 semanas sem orientação médica\n\n⚕️ Consulte sempre seu médico.'},
+  {t:['omeprazol','losec','pantoprazol','pantocal','esomeprazol','refluxo','gastrite'],r:'O **Omeprazol / Pantoprazol** protege o estômago e trata refluxo e gastrite.\n\n✅ Tome EM JEJUM, 30 min antes do café\n⚠️ Uso prolongado pode reduzir cálcio e vitamina B12\n💊 Não tome mais de 8 semanas sem orientação médica\n\n⚕️ Consulte sempre seu médico.'},
   {t:['sinvastatina','atorvastatina','rosuvastatina','colesterol','estatina','crestor','zocor'],r:'**Estatinas** (Sinvastatina, Atorvastatina, Rosuvastatina) reduzem o **colesterol**.\n\n⏰ Sinvastatina: tome À NOITE\n⏰ Atorvastatina/Rosuvastatina: qualquer horário\n⚠️ Evite toranja (grapefruit)\n💊 Dor muscular persistente: informe ao médico imediatamente\n\n⚕️ Exames regulares são importantes.'},
-  {t:['amlopidina','anlodipino','norvasc'],r:'A **Anlodipina** é para **pressão alta** e angina.\n\n✅ Tome com ou sem alimentos, sempre no mesmo horário\n💊 Pode causar inchaço nos tornozelos — informe ao médico\n💊 Vermelhidão no rosto no início é comum\n\n⚕️ Não pare sem orientação médica.'},
-  {t:['clonazepam','rivotril','alprazolam','diazepam','ansiedade','ansioso','calmante'],r:'**Benzodiazepínicos** (Clonazepam, Rivotril, Alprazolam) são para ansiedade.\n\n⚠️ Causam sonolência — cuidado ao dirigir\n⚠️ Não misture com álcool — perigoso\n⚠️ Podem causar dependência — use apenas o prescrito\n⚠️ Nunca pare abruptamente\n\n⚕️ Siga RIGOROSAMENTE a orientação médica.'},
-  {t:['sertralina','fluoxetina','escitalopram','antidepressivo','depressão','depressao'],r:'**Antidepressivos** (Sertralina, Fluoxetina, Escitalopram) levam tempo para agir.\n\n⏰ O efeito começa em 2-4 semanas — não desista!\n⚠️ Nunca pare abruptamente — reduz gradualmente\n💊 Efeitos iniciais: náusea, insônia, agitação (passam)\n\n⚕️ Mantenha as consultas regularmente.'},
-  {t:['captopril','capoten'],r:'O **Captopril** é para **pressão alta** em crise ou uso contínuo.\n\n✅ Em crise: coloque embaixo da língua\n⏰ Uso contínuo: tome em jejum, 1h antes das refeições\n💊 Efeito comum: tosse seca\n⚠️ Não use na gravidez\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['glibenclamida','gliclazida','glipizida'],r:'**Sulfonilureias** (Glibenclamida, Gliclazida) estimulam insulina no diabetes.\n\n✅ Tome antes ou junto com a refeição principal\n⚠️ Risco de hipoglicemia (açúcar baixo)\n💊 Sintomas de hipoglicemia: tremor, suor frio, tontura\n\n⚕️ Monitore a glicemia regularmente.'},
-  {t:['pressao','pressão','horario','horário','quando tomar'],r:'Para remédios de **pressão alta**:\n\n🌅 Maioria: tome DE MANHÃ (Losartana, Enalapril, Anlodipina)\n⏰ Hidroclorotiazida: manhã para não atrapalhar o sono\n🌙 Alguns médicos indicam à noite — siga seu médico\n\n✅ O mais importante: **sempre no mesmo horário**\n📱 Configure o alarme no PREVITA!'},
-  {t:['esqueci','esquecer','não tomei','nao tomei','pulei','pular'],r:'**Esqueceu de tomar o remédio?**\n\n📌 Lembrou POUCAS HORAS depois: tome imediatamente\n📌 Lembrou PERTO da próxima dose: pule e tome no horário certo\n📌 Esqueceu o DIA TODO: retome normalmente amanhã\n\n⚠️ **NUNCA dobre a dose** para compensar!\n⚕️ Em dúvida, ligue para a UBS ou farmacêutico.'},
-  {t:['hipoglicemia','açúcar baixo','acucar baixo','tremor','suor frio','tontura','fraqueza'],r:'**Hipoglicemia (açúcar baixo):**\n\n🚨 Sinais: tremor, suor frio, fraqueza, tontura, confusão\n\n1️⃣ Tome 1 copo de suco de laranja OU 3-4 balas\n2️⃣ Sente-se e descanse\n3️⃣ Meça a glicemia se tiver aparelho\n4️⃣ Se não melhorar em 15 min: chame ajuda\n\n⚕️ Informe todos os episódios ao médico.'},
-  {t:['pressao alta','crise','160','180','200'],r:'**Crise de pressão alta:**\n\n🚨 Acima de 180/110 COM sintomas (dor de cabeça, visão turva):\n→ **Ligue 192 (SAMU)** ou vá à UPA\n\n📌 Enquanto aguarda:\n• Sente-se em local tranquilo\n• Tome o remédio prescrito para crise\n• Não faça esforço físico\n\n⚕️ Não ignore esses sinais.'},
-  {t:['interação','interacao','misturar','junto','tomar junto'],r:'**Interações medicamentosas comuns:**\n\n⚠️ Losartana + AAS: pode reduzir efeito da Losartana\n⚠️ Estatina + toranja: aumenta toxicidade\n⚠️ Levotiroxina + cálcio/ferro: reduz absorção\n⚠️ Clonazepam + álcool: muito perigoso\n⚠️ Metformina + álcool: risco de acidose\n\n⚕️ Informe ao médico TODOS os remédios que usa.'},
-  {t:['chá','cha','erva','planta','boldo','espinheira','erva doce'],r:'**Chás e remédios: cuidado!**\n\n⚠️ 98,7% das casas têm remédios + chás\n\nChás perigosos com medicamentos:\n🌿 Boldo + anticoagulante = risco de sangramento\n🌿 Espinheira-santa + pressão = hipotensão\n🌿 Erva-de-são-joão + antidepressivo = reação grave\n🌿 Ginkgo + AAS = risco de sangramento\n\n⚕️ Sempre informe ao médico os chás que toma.'},
-  {t:['vacina','vacinação','gripe','covid','febre amarela'],r:'**Vacinas importantes para adultos:**\n\n💉 Gripe: anual\n💉 COVID-19: conforme calendário\n💉 Hepatite B: 3 doses\n💉 Febre Amarela: dose única (reforço se necessário)\n💉 Tétano/Difteria: a cada 10 anos\n\n✅ Todas gratuitas na UBS São Pedro!\n📅 Mantenha sua carteirinha atualizada.'},
-  {t:['diabetes','diabético','diabetico','glicemia','glicose','insulina'],r:'**Diabetes — dicas importantes:**\n\n📊 Glicemia normal em jejum: 70-99 mg/dL\n📊 Após refeição (2h): até 140 mg/dL\n\n✅ Tome os remédios nos horários certos\n✅ Monitore a glicemia regularmente\n✅ Examine os pés todo dia\n✅ Cuide da alimentação\n⚠️ Nunca pule refeições se toma insulina\n\n⚕️ Consultas regulares são essenciais.'},
-  {t:['hipertensão','hipertensao','pressao alta','pa alta'],r:'**Hipertensão — o que você precisa saber:**\n\n📊 Pressão normal: abaixo de 130/80\n📊 Hipertensão: acima de 140/90\n\n✅ Tome o remédio TODO DIA, mesmo sem sintomas\n✅ Reduza sal (máximo 5g/dia)\n✅ Evite embutidos, enlatados, fast food\n✅ Meça a pressão regularmente\n⚠️ 70% dos hipertensos não sentem nada!\n\n⚕️ A pressão volta se parar o remédio.'},
-  {t:['metoprolol','succinato','tartarato','selozok','lopressor','beta bloqueador','beta-bloqueador'],r:'O **Metoprolol** é para **pressão alta**, arritmia e insuficiência cardíaca.\n\n✅ Tome com alimentos — reduz efeitos no estômago\n⚠️ NUNCA pare abruptamente — pode causar crise cardíaca\n💊 Efeitos comuns: cansaço, mãos e pés frios, sonolência\n⚠️ Pode mascarar sintomas de hipoglicemia em diabéticos\n⏰ Tome sempre no mesmo horário\n\n⚕️ Nunca pare sem orientação médica.'},
-  {t:['propranolol','atenolol','carvedilol','bisoprolol'],r:'**Beta-bloqueadores** (Propranolol, Atenolol, Carvedilol) controlam pressão e coração.\n\n✅ Tome sempre no mesmo horário\n⚠️ NUNCA pare abruptamente — risco de crise\n💊 Causam cansaço e mãos frias no início\n⚠️ Cuidado com diabéticos — mascara hipoglicemia\n\n⚕️ Siga rigorosamente a orientação médica.'},
-  {t:['furosemida','lasix','diurético','diuretico forte'],r:'A **Furosemida (Lasix)** é um diurético potente para pressão alta e insuficiência cardíaca.\n\n✅ Tome DE MANHÃ — causa muito aumento de urina\n⚠️ Pode causar câimbras — baixa potássio\n💊 Coma alimentos ricos em potássio (banana, laranja)\n⚠️ Hidrate-se bem\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['warfarina','varfarina','coumadin','anticoagulante','sangue grosso'],r:'A **Varfarina (Coumadin)** é anticoagulante — afina o sangue.\n\n✅ Tome sempre no mesmo horário\n⚠️ CUIDADO com alimentos ricos em vitamina K (couve, brócolis, espinafre)\n⚠️ Evite AAS e anti-inflamatórios sem orientação\n⚠️ Qualquer sangramento incomum: informe ao médico\n🔬 Faça o exame INR regularmente\n\n⚕️ Nunca altere a dose sem o médico.'},
-  {t:['rivoxabana','apixabana','dabigatrana','eliquis','xarelto'],r:'**Anticoagulantes modernos** (Xarelto, Eliquis) affinam o sangue.\n\n✅ Rivaroxabana (Xarelto): tome com a refeição principal\n✅ Apixabana (Eliquis): tome com ou sem alimentos\n⚠️ Qualquer sangramento incomum: informe ao médico\n⚠️ Não tome AAS sem orientação\n\n⚕️ Nunca pare sem orientação médica.'},
-  {t:['insulina','lantus','nph','regular','novorapid','humalog'],r:'**Insulina** — orientações importantes:\n\n💉 Lantus/NPH (lenta): geralmente à noite\n💉 Regular/Rápida: 15-30 min antes das refeições\n✅ Guarde na geladeira (não congelar)\n⚠️ Sempre tenha açúcar ou suco por perto\n🚨 Hipoglicemia: tremor, suor frio — tome açúcar imediatamente\n\n⚕️ Siga rigorosamente a orientação médica.'},
-  {t:['ibuprofeno','diclofenaco','nimesulida','naproxeno','anti-inflamatório','antiinflamatorio','dor','inflamação'],r:'**Anti-inflamatórios** (Ibuprofeno, Diclofenaco, Nimesulida):\n\n✅ Tome SEMPRE com alimentos — protege o estômago\n⚠️ Não use por mais de 5-7 dias sem orientação\n⚠️ Cuidado com pressão alta — podem elevar a pressão\n⚠️ Evite se tiver gastrite ou úlcera\n⚠️ Não misture com anticoagulantes\n\n⚕️ Para dor crônica, consulte seu médico.'},
-  {t:['paracetamol','dipirona','novalgina','tylenol','acetaminofen','febre','dor de cabeça'],r:'**Paracetamol e Dipirona** para dor e febre:\n\n✅ Paracetamol: dose máxima 4g/dia (8 comprimidos 500mg)\n✅ Dipirona: tome com água após as refeições\n⚠️ Paracetamol + álcool = dano ao fígado\n💊 Febre acima de 39°C persistente: procure atendimento\n\n⚕️ Para crianças, sempre consulte o pediatra para a dose certa.'},
-  {t:['amoxicilina','amoxilina','azitromicina','antibiotico','antibiótico'],r:'**Antibióticos** — regras importantes:\n\n✅ TERMINE o tratamento completo, mesmo sentindo melhor\n⚠️ Não guarde sobras — resistência bacteriana\n⚠️ Não tome antibiótico para gripe ou resfriado (são vírus)\n💊 Amoxicilina: tome com alimentos\n💊 Azitromicina: 1x ao dia, 1h antes ou 2h após comer\n\n⚕️ Só use com prescrição médica.'},
-  {t:['carbonato de calcio','calcio','cálcio','osteoporose','aclasta','alendronato'],r:'**Cálcio e Osteoporose:**\n\n✅ Carbonato de cálcio: tome COM alimentos\n✅ Citrato de cálcio: pode tomar em jejum\n⚠️ Não tome junto com Levotiroxina ou Ferro\n💊 Alendronato: tome em jejum com copo cheio de água, fique em pé 30 min\n☀️ Vitamina D ajuda na absorção do cálcio\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['ferro','sulfato ferroso','noripurum','anemia'],r:'O **Sulfato Ferroso** trata **anemia por deficiência de ferro**.\n\n✅ Tome EM JEJUM ou com suco de laranja (vitamina C ajuda absorção)\n⚠️ Não tome com leite, café ou antiácidos\n⚠️ Não tome junto com Levotiroxina\n💊 Fezes escuras são normais\n💊 Pode causar náusea — se incomodar, tome após refeição\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['resfriado','gripe','tosse','coriza','nariz entupido'],r:'**Gripe e Resfriado — cuidados:**\n\n✅ Descanse bastante\n✅ Beba muita água e líquidos\n✅ Paracetamol ou Dipirona para febre e dor\n⚠️ Antibiótico NÃO funciona para gripe — é vírus!\n⚠️ Febre acima de 39°C por mais de 2 dias: procure atendimento\n\n🏥 Vacina da gripe: gratuita todo ano na UBS São Pedro!'},
-  {t:['pressao baixa','hipotensão','hipotensao','tontura ao levantar','desmaio'],r:'**Pressão baixa (Hipotensão):**\n\n🚨 Sinais: tontura ao levantar, visão escura, desmaio\n\n✅ Levante devagar — primeiro sente, depois levanta\n✅ Beba mais água\n✅ Coma alimentos levemente salgados\n⚠️ Se tomar remédio para pressão: informe ao médico\n⚠️ Desmaio: deite e eleve as pernas\n\n⚕️ Pressão abaixo de 90/60 persistente: consulte seu médico.'},
-  {t:['colesterol','triglicerides','triglicerídeos','ldl','hdl'],r:'**Colesterol e Triglicerídeos:**\n\n📊 Colesterol total ideal: abaixo de 190 mg/dL\n📊 LDL (ruim): abaixo de 130 (ou 70 em cardíacos)\n📊 HDL (bom): acima de 40 (homens) / 50 (mulheres)\n📊 Triglicerídeos: abaixo de 150\n\n✅ Tome a estatina no horário certo\n✅ Evite gorduras saturadas e frituras\n✅ Exercício físico aumenta o HDL (bom)\n\n⚕️ Exames regulares são essenciais.'},
-  {t:['samu','emergência','emergencia','urgência','urgencia','socorro','192'],r:'**Ligue 192 (SAMU) em caso de:**\n\n🚨 Dor no peito ou falta de ar súbita\n🚨 AVC: rosto torto, braço fraco, fala difícil\n🚨 Pressão acima de 180/110 com sintomas\n🚨 Hipoglicemia sem melhora\n🚨 Perda de consciência\n🚨 Dificuldade para respirar\n\n📞 **SAMU: 192** | **Bombeiros: 193**\n🏥 UPA mais próxima ou UBS São Pedro'},
-  {t:['metformina'],r:'A **Metformina** é para **diabetes tipo 2**. Reduz a glicose no fígado e melhora a resposta à insulina.\n\n✅ Tome **junto com as refeições** para evitar náuseas.\n⚠️ Nunca tome com o estômago vazio.\n\n⚕️ Siga sempre a orientação do seu médico.'},
-  {t:['losartana'],r:'A **Losartana** é para **pressão alta**. Relaxa os vasos sanguíneos.\n\n✅ Pode tomar com ou sem alimentos.\n⚠️ Evite excesso de potássio (banana, laranja).\n⚠️ Não use na gravidez.\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['levotiroxina','tireoide','tireóide','hipotireoidismo'],r:'A **Levotiroxina** trata o **hipotireoidismo**.\n\n✅ Tome **em jejum**, 30-60 min antes do café.\n⚠️ Não tome com leite ou ferro — prejudicam a absorção.\n\n⚕️ Repita o TSH a cada 6 meses.'},
-  {t:['enalapril'],r:'O **Enalapril** é para **pressão alta**.\n\n✅ Tome com ou sem alimentos.\n💊 Efeito comum: tosse seca persistente — informe ao médico.\n\n⚕️ Siga sempre a orientação médica.'},
-  {t:['aas','aspirina'],r:'O **AAS / Aspirina** em baixa dose previne coágulos.\n\n✅ Tome após as refeições.\n⚠️ Pode irritar o estômago.\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['hidroclorotiazida','diurético','diuretico'],r:'A **Hidroclorotiazida** é diurética para **pressão alta**.\n\n✅ Tome de manhã para não atrapalhar o sono.\n⚠️ Pode reduzir potássio.\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['omeprazol','pantoprazol','refluxo'],r:'O **Omeprazol** protege o estômago e trata refluxo.\n\n✅ Tome **em jejum**, 30 min antes do café.\n\n⚕️ Consulte sempre seu médico.'},
-  {t:['sinvastatina','atorvastatina','colesterol'],r:'**Estatinas** reduzem o **colesterol**.\n\n✅ Sinvastatina: tome à noite. Atorvastatina: qualquer hora.\n⚠️ Dor muscular persistente: informe ao médico.\n\n⚕️ Exames regulares são importantes.'},
-  {t:['pressao','pressão','horario'],r:'Para remédios de **pressão alta**:\n\n⏰ Maioria: tome **de manhã**.\n✅ O mais importante: tomar **sempre no mesmo horário**.\n\n⚕️ Meça a pressão regularmente.'},
-  {t:['esqueci','esquecer','não tomei','nao tomei'],r:'**Esqueceu o remédio?**\n\n📌 Poucas horas depois: tome imediatamente.\n📌 Próximo da próxima dose: pule e tome no horário certo.\n⚠️ **Nunca dobre a dose** para compensar.\n\n⚕️ Em dúvida, ligue para a UBS.'},
-  {t:['hipoglicemia','açúcar baixo','acucar baixo','tremor','suor frio'],r:'**Hipoglicemia:**\n\n🚨 Tremor, suor frio, fraqueza, tontura.\n1. Tome 1 copo de suco ou 3 balas\n2. Descanse\n3. Se não melhorar em 15 min: chame ajuda\n\n⚕️ Informe ao médico.'},
-  {t:['pressao alta','crise','160','180'],r:'**Crise de pressão alta:**\n\n🚨 Se acima de 180/110 com sintomas: **ligue 192 (SAMU)**\n\nEnquanto isso: sente-se, tome o remédio prescrito.\n\n⚕️ Não ignore esses sinais.'},
+  {t:['anlodipina','anlodipino','norvasc'],r:'A **Anlodipina** é para **pressão alta** e angina.\n\n✅ Tome com ou sem alimentos, sempre no mesmo horário\n💊 Pode causar inchaço nos tornozelos — informe ao médico\n💊 Vermelhidão no rosto no início é comum\n\n⚕️ Não pare sem orientação médica.'},
+  {t:['clonazepam','rivotril','alprazolam','diazepam','ansiedade','calmante'],r:'**Benzodiazepínicos** (Clonazepam, Rivotril) são para ansiedade.\n\n⚠️ Causam sonolência — cuidado ao dirigir\n⚠️ Não misture com álcool — perigoso\n⚠️ Podem causar dependência — use apenas o prescrito\n⚠️ Nunca pare abruptamente\n\n⚕️ Siga RIGOROSAMENTE a orientação médica.'},
+  {t:['sertralina','fluoxetina','escitalopram','antidepressivo','depressão','depressao'],r:'**Antidepressivos** (Sertralina, Fluoxetina) levam tempo para agir.\n\n⏰ O efeito começa em 2-4 semanas — não desista!\n⚠️ Nunca pare abruptamente — reduz gradualmente\n💊 Efeitos iniciais: náusea, insônia (passam)\n\n⚕️ Mantenha as consultas regularmente.'},
+  {t:['metoprolol','propranolol','atenolol','carvedilol','bisoprolol','beta'],r:'**Beta-bloqueadores** (Metoprolol, Propranolol, Atenolol) controlam pressão e coração.\n\n✅ Tome sempre no mesmo horário\n⚠️ NUNCA pare abruptamente — risco de crise\n💊 Causam cansaço e mãos frias no início\n⚠️ Cuidado com diabéticos — mascara hipoglicemia\n\n⚕️ Siga rigorosamente a orientação médica.'},
+  {t:['pressao','pressão','horario remedio'],r:'Para remédios de **pressão alta**:\n\n🌅 Maioria: tome DE MANHÃ (Losartana, Enalapril, Anlodipina)\n⏰ Hidroclorotiazida: manhã para não atrapalhar o sono\n\n✅ O mais importante: **sempre no mesmo horário**\n📱 Configure o alarme no PREVITA!'},
+  {t:['esqueci','esquecer','não tomei','nao tomei','pulei'],r:'**Esqueceu de tomar o remédio?**\n\n📌 Lembrou POUCAS HORAS depois: tome imediatamente\n📌 Lembrou PERTO da próxima dose: pule e tome no horário certo\n📌 Esqueceu o DIA TODO: retome normalmente amanhã\n\n⚠️ **NUNCA dobre a dose** para compensar!\n⚕️ Em dúvida, ligue para a UBS ou farmacêutico.'},
+  {t:['hipoglicemia','açúcar baixo','acucar baixo','tremor','suor frio'],r:'**Hipoglicemia (açúcar baixo):**\n\n🚨 Sinais: tremor, suor frio, fraqueza, tontura, confusão\n\n1️⃣ Tome 1 copo de suco de laranja OU 3-4 balas\n2️⃣ Sente-se e descanse\n3️⃣ Se não melhorar em 15 min: chame ajuda\n\n⚕️ Informe todos os episódios ao médico.'},
+  {t:['crise','180','200','pressao alta emergencia','samu','192'],r:'**Crise de pressão alta:**\n\n🚨 Acima de 180/110 COM sintomas: **Ligue 192 (SAMU)**\n\n📌 Enquanto aguarda: sente-se, tome o remédio prescrito para crise\n\n⚕️ Não ignore esses sinais.'},
+  {t:['interação','interacao','misturar','tomar junto'],r:'**Interações medicamentosas comuns:**\n\n⚠️ Losartana + AAS: pode reduzir efeito\n⚠️ Estatina + toranja: aumenta toxicidade\n⚠️ Levotiroxina + cálcio/ferro: reduz absorção\n⚠️ Clonazepam + álcool: muito perigoso\n⚠️ Metformina + álcool: risco de acidose\n\n⚕️ Informe ao médico TODOS os remédios que usa.'},
+  {t:['diabetes','diabético','diabetico','glicemia','glicose','insulina'],r:'**Diabetes — dicas importantes:**\n\n📊 Glicemia normal em jejum: 70-99 mg/dL\n\n✅ Tome os remédios nos horários certos\n✅ Monitore a glicemia regularmente\n✅ Examine os pés todo dia\n⚠️ Nunca pule refeições se toma insulina\n\n⚕️ Consultas regulares são essenciais.'},
+  {t:['hipertensão','hipertensao'],r:'**Hipertensão — o que você precisa saber:**\n\n📊 Pressão normal: abaixo de 130/80\n📊 Hipertensão: acima de 140/90\n\n✅ Tome o remédio TODO DIA, mesmo sem sintomas\n✅ Reduza sal (máximo 5g/dia)\n⚠️ 70% dos hipertensos não sentem nada!\n\n⚕️ A pressão volta se parar o remédio.'},
+  {t:['furosemida','lasix'],r:'A **Furosemida (Lasix)** é um diurético potente.\n\n✅ Tome DE MANHÃ — causa muito aumento de urina\n⚠️ Pode causar câimbras — baixa potássio\n💊 Coma alimentos ricos em potássio (banana, laranja)\n\n⚕️ Consulte sempre seu médico.'},
+  {t:['ibuprofeno','diclofenaco','nimesulida','naproxeno','anti-inflamatorio','antiinflamatorio'],r:'**Anti-inflamatórios** (Ibuprofeno, Diclofenaco, Nimesulida):\n\n✅ Tome SEMPRE com alimentos\n⚠️ Não use por mais de 5-7 dias sem orientação\n⚠️ Podem elevar a pressão\n⚠️ Evite se tiver gastrite ou úlcera\n\n⚕️ Para dor crônica, consulte seu médico.'},
+  {t:['paracetamol','dipirona','novalgina','tylenol','febre','dor de cabeça'],r:'**Paracetamol e Dipirona** para dor e febre:\n\n✅ Paracetamol: dose máxima 4g/dia\n✅ Dipirona: tome com água após as refeições\n⚠️ Paracetamol + álcool = dano ao fígado\n💊 Febre acima de 39°C persistente: procure atendimento\n\n⚕️ Para crianças, consulte o pediatra.'},
+  {t:['amoxicilina','azitromicina','antibiotico','antibiótico'],r:'**Antibióticos** — regras importantes:\n\n✅ TERMINE o tratamento completo, mesmo sentindo melhor\n⚠️ Não guarde sobras\n⚠️ Não tome antibiótico para gripe (é vírus)\n💊 Amoxicilina: tome com alimentos\n\n⚕️ Só use com prescrição médica.'},
+  {t:['colesterol','triglicerides','triglicerídeos','ldl','hdl'],r:'**Colesterol e Triglicerídeos:**\n\n📊 Colesterol total ideal: abaixo de 190 mg/dL\n📊 LDL (ruim): abaixo de 130\n📊 HDL (bom): acima de 40 (homens) / 50 (mulheres)\n\n✅ Tome a estatina no horário certo\n✅ Evite gorduras saturadas\n\n⚕️ Exames regulares são essenciais.'},
+  {t:['ferro','sulfato ferroso','anemia'],r:'O **Sulfato Ferroso** trata **anemia**.\n\n✅ Tome EM JEJUM ou com suco de laranja\n⚠️ Não tome com leite, café ou antiácidos\n⚠️ Não tome junto com Levotiroxina\n💊 Fezes escuras são normais\n\n⚕️ Consulte sempre seu médico.'},
+  {t:['captopril','capoten'],r:'O **Captopril** é para **pressão alta** em crise ou uso contínuo.\n\n✅ Em crise: coloque embaixo da língua\n⏰ Uso contínuo: tome em jejum, 1h antes das refeições\n💊 Efeito comum: tosse seca\n\n⚕️ Consulte sempre seu médico.'},
+  {t:['samu','bombeiros','emergencia','emergência','socorro'],r:'**Emergências — ligue:**\n\n📞 **SAMU: 192**\n📞 **Bombeiros: 193**\n🏥 UPA mais próxima ou UBS São Pedro\n\n🚨 Ligue em caso de:\n• Dor no peito ou falta de ar súbita\n• AVC: rosto torto, braço fraco, fala difícil\n• Pressão acima de 180/110 com sintomas\n• Perda de consciência'},
 ];
+
 function buscarResposta(msg){
   const ml=msg.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  for(const item of BASE){if(item.t.some(t=>ml.includes(t.normalize('NFD').replace(/[\u0300-\u036f]/g,''))))return item.r;}
-  if(ml.includes('bom dia')||ml.includes('ola')||ml.includes('olá'))return'Olá! 😊 Pergunte sobre seus remédios, horários ou dicas de saúde.';
-  if(ml.includes('obrigad'))return'De nada! 😊 Cuide-se bem!';
-  return`Posso ajudar com:\n💊 Metformina, Losartana, Levotiroxina, Enalapril, AAS, Omeprazol\n❓ Esqueci o remédio\n⚠️ Interações e crises\n\nPara outras dúvidas, consulte a UBS. ⚕️`;
+  for(const item of BASE){
+    if(item.t.some(t=>ml.includes(t.normalize('NFD').replace(/[\u0300-\u036f]/g,''))))return item.r;
+  }
+  return null; // null = não achou na base offline, libera botão de pesquisa online
 }
+
 function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
-function enviarIA(){
-  const input=document.getElementById('iaInput'),msg=input.value.trim();if(!msg)return;
-  input.value='';
+
+// ===== ASSISTENTE PREV =====
+function adicionarMsgChat(tipo, html){
   const chat=document.getElementById('iaChat');
-  chat.innerHTML+=`<div class="msg user"><div class="msg-bubble">${msg}</div></div>`;
-  const t=document.createElement('div');t.className='msg ia';t.innerHTML=`<div style="padding:10px 14px;background:white;border-radius:16px;box-shadow:var(--sombra);"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
-  chat.appendChild(t);chat.scrollTop=chat.scrollHeight;
-  setTimeout(()=>{t.remove();chat.innerHTML+=`<div class="msg ia"><div class="msg-bubble">${fmt(buscarResposta(msg))}</div></div>`;chat.scrollTop=chat.scrollHeight;},500+Math.random()*600);
+  const div=document.createElement('div');
+  div.className='msg '+tipo;
+  div.innerHTML=`<div class="msg-bubble">${html}</div>`;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+  return div;
 }
-function perguntaRapida(txt){document.getElementById('iaInput').value=txt;enviarIA();}
+
+function enviarIA(){
+  const input=document.getElementById('iaInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  ultimaPerguntaIA=msg;
+  input.value='';
+
+  document.getElementById('btnPesquisarOnline').style.display='none';
+  adicionarMsgChat('user', msg);
+
+  const chat=document.getElementById('iaChat');
+  const typing=document.createElement('div');
+  typing.className='msg ia';
+  typing.innerHTML=`<div style="padding:10px 14px;background:white;border-radius:16px;box-shadow:var(--sombra);"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  chat.appendChild(typing);
+  chat.scrollTop=chat.scrollHeight;
+
+  setTimeout(()=>{
+    typing.remove();
+    const resposta=buscarResposta(msg);
+    if(resposta){
+      adicionarMsgChat('ia', fmt(resposta));
+      document.getElementById('btnPesquisarOnline').style.display='block';
+    } else {
+      adicionarMsgChat('ia', `💊 Não encontrei "<strong>${msg}</strong>" na minha base offline.<br><br>Clique abaixo para pesquisar online! 🌐`);
+      document.getElementById('btnPesquisarOnline').style.display='block';
+    }
+  }, 400+Math.random()*400);
+}
+
+// ===== PESQUISA ONLINE — VIA WORKER GRATUITO (GEMINI) =====
+async function pesquisarOnline(){
+  const msg=ultimaPerguntaIA;
+  if(!msg)return;
+
+  if(!WORKER_URL || WORKER_URL.includes('SEUUSUARIO')){
+    adicionarMsgChat('ia','⚠️ A pesquisa online ainda não foi configurada. Foster precisa publicar o Worker e colocar o link certo no código.');
+    return;
+  }
+
+  document.getElementById('btnPesquisarOnline').style.display='none';
+  const chat=document.getElementById('iaChat');
+
+  const loading=document.createElement('div');
+  loading.className='msg ia';
+  loading.innerHTML=`<div class="msg-bubble" style="background:#e0f2fe;color:#0369a1;">🌐 Pesquisando online sobre <strong>${msg}</strong>...<br><span style="font-size:11px;opacity:0.8;">Aguarde alguns segundos...</span></div>`;
+  chat.appendChild(loading);
+  chat.scrollTop=chat.scrollHeight;
+
+  try {
+    const resp=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pergunta:msg})
+    });
+    const data=await resp.json();
+    loading.remove();
+
+    if(data.resposta){
+      adicionarMsgChat('ia', `🌐 <strong>Pesquisa online:</strong><br><br>${fmt(data.resposta)}`);
+    } else {
+      adicionarMsgChat('ia', '⚠️ Não consegui obter informações online agora. Consulte um farmacêutico ou médico.\n\n⚕️ UBS São Pedro pode te orientar.');
+    }
+  } catch(err){
+    loading.remove();
+    adicionarMsgChat('ia', '⚠️ Sem conexão com o servidor de pesquisa. Verifique sua internet e tente novamente.\n\n⚕️ Para dúvidas urgentes, ligue para a UBS São Pedro.');
+  }
+}
+
+function perguntaRapida(txt){
+  document.getElementById('iaInput').value=txt;
+  enviarIA();
+}
+
+// ===== RECEITA — OCR GRATUITO COM TESSERACT.JS =====
+async function previewReceitaFoto(input){
+  if(!input.files||!input.files[0])return;
+
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    const imgEl=document.getElementById('receitaFotoPreview');
+    imgEl.src=e.target.result;
+    imgEl.style.display='block';
+
+    const status=document.getElementById('receitaFotoStatus');
+    status.style.display='block';
+    status.style.background='#e0f2fe';
+    status.style.color='#0369a1';
+    status.textContent='🔍 Lendo a receita... isso pode levar até 30 segundos.';
+
+    const progWrap=document.getElementById('ocrProgressWrap');
+    const progBar=document.getElementById('ocrProgressBar');
+    progWrap.style.display='block';
+    progBar.style.width='0%';
+
+    try {
+      const resultado = await Tesseract.recognize(
+        e.target.result,
+        'por', // idioma português
+        {
+          logger: info => {
+            if(info.status==='recognizing text'){
+              const pct=Math.round(info.progress*100);
+              progBar.style.width=pct+'%';
+              status.textContent=`🔍 Lendo a receita... ${pct}%`;
+            }
+          }
+        }
+      );
+
+      progWrap.style.display='none';
+      const textoLido = resultado.data.text.trim();
+
+      if(textoLido && textoLido.length>3){
+        document.getElementById('receitaTextoInput').value = textoLido;
+        status.style.background='#e8f5ee';
+        status.style.color='#1a7a4a';
+        status.textContent='✅ Texto lido! Confira e ajuste os remédios abaixo antes de adicionar.';
+      } else {
+        status.style.background='#fff3e8';
+        status.style.color='#c2410c';
+        status.textContent='⚠️ Não consegui ler texto na foto. Tente uma foto mais nítida ou digite manualmente abaixo.';
+      }
+    } catch(err){
+      progWrap.style.display='none';
+      status.style.background='#fff3e8';
+      status.style.color='#c2410c';
+      status.textContent='⚠️ Erro ao processar a imagem. Digite os remédios manualmente abaixo.';
+    }
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ===== RECEITA — PROCESSAR TEXTO =====
+let receitaProcessadaFinal=[];
+
+function processarReceitaTexto(){
+  const texto=document.getElementById('receitaTextoInput').value.trim();
+  if(!texto){alert('Digite ou cole os remédios primeiro!');return;}
+  const linhas=texto.split(/\r?\n/).map(l=>l.trim()).filter(l=>l.length>2);
+  if(!linhas.length){alert('Nenhum remédio encontrado!');return;}
+
+  receitaProcessadaFinal=linhas.map(linha=>{
+    let horarios=['08:00'];
+    const l=linha.toLowerCase();
+    if(l.includes('sinvastatin')||l.includes('atorvastatin'))horarios=['20:00'];
+    else if(l.includes('levotiroxin')||l.includes('omeprazol')||l.includes('pantoprazol'))horarios=['06:30'];
+    else if(l.includes('metformin'))horarios=['08:00','20:00'];
+    else if(l.includes('hidroclorotia'))horarios=['07:00'];
+    else if(l.includes('insulina'))horarios=['08:00','12:00','18:00'];
+    return{
+      nome:linha.substring(0,60),
+      dose:'1 unidade',
+      horarios,
+      periodo:parseInt(horarios[0])<12?'manha':parseInt(horarios[0])<18?'tarde':'noite',
+      obs:''
+    };
+  });
+  renderReceitaResultado();
+}
+
+function renderReceitaResultado(){
+  if(!receitaProcessadaFinal.length)return;
+  const PL={manha:'🌅',tarde:'☀️',noite:'🌙'};
+  document.getElementById('receitaResultadoLista').innerHTML=receitaProcessadaFinal.map((r,i)=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--cinza);display:flex;align-items:center;gap:10px;">
+      <div style="font-size:22px;">${PL[r.periodo]||'💊'}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:800;">${r.nome}</div>
+        <div style="font-size:10px;color:var(--cinza-texto);font-weight:600;">
+          ${r.horarios.map(h=>`<span style="background:var(--verde-claro);color:var(--verde);border-radius:5px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px;">${h}</span>`).join('')}
+        </div>
+      </div>
+      <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--verde);" id="recSel_${i}">
+    </div>`).join('');
+  document.getElementById('receitaResultadoCard').style.display='block';
+}
+
+function importarReceitaSelecionados(){
+  let imp=0;
+  receitaProcessadaFinal.forEach((r,i)=>{
+    const cb=document.getElementById('recSel_'+i);
+    if(cb&&cb.checked&&!remedios.find(x=>x.nome.toLowerCase()===r.nome.toLowerCase().substring(0,20))){
+      remedios.push({id:Date.now()+i,nome:r.nome,dose:r.dose,horarios:r.horarios,periodo:r.periodo,obs:r.obs});
+      imp++;
+    }
+  });
+  localStorage.setItem('pv_remedios',JSON.stringify(remedios));
+  renderRemedios();atualizarHeader();
+  mostrarToast('✅ '+imp+' remédio'+(imp!==1?'s':'')+' adicionado'+(imp!==1?'s':'')+'!');
+  limparReceita();
+  irPara('remedios',document.querySelectorAll('.tab-btn')[0]);
+}
+
+function limparReceita(){
+  receitaProcessadaFinal=[];
+  document.getElementById('receitaTextoInput').value='';
+  document.getElementById('receitaResultadoCard').style.display='none';
+  document.getElementById('receitaFotoPreview').style.display='none';
+  document.getElementById('receitaFotoStatus').style.display='none';
+  document.getElementById('ocrProgressWrap').style.display='none';
+  document.getElementById('receitaFotoInput').value='';
+}
 
 // ===== PERFIL =====
 function selecionarTipo(tipo){
@@ -1138,110 +1318,18 @@ function mostrarToast(msg){
   t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);
 }
 
+// ===== CONTADOR DE ACESSO =====
+function registrarAcesso(){
+  try{
+    let total=parseInt(localStorage.getItem('pv_acessos_total')||'0')+1;
+    localStorage.setItem('pv_acessos_total',total);
+    const el=document.getElementById('contadorAcessos');
+    if(el)el.textContent=total.toLocaleString('pt-BR')+' acessos neste dispositivo';
+  }catch(e){}
+}
+
 document.addEventListener('touchstart',()=>getAudioCtx(),{once:true});
 document.addEventListener('click',()=>getAudioCtx(),{once:true});
-
-
-// ===== RECEITA =====
-let receitaProcessadaFinal = [];
-
-function previewReceitaFoto(input) {
-  if(!input.files||!input.files[0])return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = document.getElementById('receitaFotoPreview');
-    img.src = e.target.result;
-    img.style.display = 'block';
-    document.getElementById('receitaFotoStatus').style.display = 'block';
-  };
-  reader.readAsDataURL(input.files[0]);
-}
-
-function processarReceitaTexto() {
-  const texto = document.getElementById('receitaTextoInput').value.trim();
-  if(!texto) { alert('Digite ou cole os remédios primeiro!'); return; }
-  
-  const linhas = texto.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 2);
-  if(!linhas.length) { alert('Nenhum remédio encontrado!'); return; }
-  
-  // Processar cada linha como um remédio
-  receitaProcessadaFinal = linhas.map(linha => {
-    // Extrair nome e possível dose
-    const partes = linha.split(/[\s,]+/);
-    const nome = linha.replace(/\d+\s*mg|\d+\s*ml|\d+\s*mcg/gi, '').trim().replace(/\s+/g, ' ');
-    
-    // Definir horário baseado em palavras-chave comuns
-    let horarios = ['08:00'];
-    const l = linha.toLowerCase();
-    if(l.includes('sinvastatin')||l.includes('atorvastatin'))horarios=['20:00'];
-    else if(l.includes('levotiroxin')||l.includes('omeprazol')||l.includes('pantoprazol'))horarios=['06:30'];
-    else if(l.includes('metformin'))horarios=['08:00','20:00'];
-    else if(l.includes('hidroclorotia'))horarios=['07:00'];
-    else if(l.includes('insulina'))horarios=['08:00','12:00','18:00'];
-    
-    return {
-      nome: linha.substring(0, 60),
-      dose: '1 unidade',
-      horarios,
-      periodo: parseInt(horarios[0]) < 12 ? 'manha' : parseInt(horarios[0]) < 18 ? 'tarde' : 'noite',
-      obs: ''
-    };
-  });
-  
-  renderReceitaResultado();
-}
-
-function renderReceitaResultado() {
-  if(!receitaProcessadaFinal.length) return;
-  const PERIODOS_LOCAL = {manha:'🌅',tarde:'☀️',noite:'🌙'};
-  document.getElementById('receitaResultadoLista').innerHTML = receitaProcessadaFinal.map((r,i) => `
-    <div style="padding:10px 0;border-bottom:1px solid var(--cinza);display:flex;align-items:center;gap:10px;">
-      <div style="font-size:22px;">${PERIODOS_LOCAL[r.periodo]||'💊'}</div>
-      <div style="flex:1;">
-        <div style="font-size:13px;font-weight:800;">${r.nome}</div>
-        <div style="font-size:10px;color:var(--cinza-texto);font-weight:600;">
-          ${r.horarios.map(h=>`<span style="background:var(--verde-claro);color:var(--verde);border-radius:5px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px;">${h}</span>`).join('')}
-        </div>
-      </div>
-      <input type="checkbox" checked style="width:18px;height:18px;accent-color:var(--verde);" id="recSel_${i}">
-    </div>`).join('');
-  document.getElementById('receitaResultadoCard').style.display = 'block';
-}
-
-function importarReceitaSelecionados() {
-  let imp = 0;
-  receitaProcessadaFinal.forEach((r, i) => {
-    const cb = document.getElementById('recSel_' + i);
-    if(cb && cb.checked && !remedios.find(x => x.nome.toLowerCase() === r.nome.toLowerCase().substring(0,20))) {
-      remedios.push({id: Date.now()+i, nome: r.nome, dose: r.dose, horarios: r.horarios, periodo: r.periodo, obs: r.obs});
-      imp++;
-    }
-  });
-  localStorage.setItem('pv_remedios', JSON.stringify(remedios));
-  renderRemedios(); atualizarHeader();
-  mostrarToast('✅ ' + imp + ' remédio' + (imp!==1?'s':'') + ' adicionado' + (imp!==1?'s':'') + '!');
-  limparReceita();
-  irPara('remedios', document.querySelectorAll('.tab-btn')[0]);
-}
-
-function limparReceita() {
-  receitaProcessadaFinal = [];
-  document.getElementById('receitaTextoInput').value = '';
-  document.getElementById('receitaResultadoCard').style.display = 'none';
-  document.getElementById('receitaFotoPreview').style.display = 'none';
-  document.getElementById('receitaFotoStatus').style.display = 'none';
-  document.getElementById('receitaFotoInput').value = '';
-}
-
-// ===== CONTADOR DE ACESSO LOCAL =====
-function registrarAcesso() {
-  try {
-    let total = parseInt(localStorage.getItem('pv_acessos_total')||'0') + 1;
-    localStorage.setItem('pv_acessos_total', total);
-    const el = document.getElementById('contadorAcessos');
-    if(el) el.textContent = total.toLocaleString('pt-BR') + ' acessos neste dispositivo';
-  } catch(e) {}
-}
 
 // ===== INIT =====
 atualizarHeader();renderRemedios();renderPacientes();renderDicas('todos');renderPerfil();
