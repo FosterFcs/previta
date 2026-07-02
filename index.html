@@ -252,33 +252,46 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 </header>
 
 <!-- REMÉDIOS -->
-<div class="tela ativa" id="tela-remedios">
-  <!-- BANNER INFORMATIVO -->
-  <div class="banner-info" style="margin-top:14px;">
-    <h3>💊 Cuide-se com PREVITA</h3>
-    <p>Controle seus remédios, acompanhe consultas<br>e cuide da sua saúde no dia a dia.</p>
-    <small>⚠️ Não substitui prescrição ou orientação médica.</small>
-    <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.2);font-size:10px;opacity:0.85;"><br>
+<div class="tela" id="tela-inicio">
+  <div style="background:linear-gradient(135deg,#1a7a4a,#0d4f2e);border-radius:16px;padding:18px;color:white;margin:14px 0 12px;">
+    <h2 id="dashSaudacao" style="font-size:16px;font-weight:900;margin-bottom:4px;">Bom dia! 👋</h2>
+    <p id="dashNome" style="font-size:11px;opacity:0.85;font-weight:600;">Configure seu perfil na aba Usuário</p>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:12px;">
+    <div style="flex:1;background:white;border-radius:14px;padding:11px;text-align:center;box-shadow:var(--sombra);"><div style="font-size:24px;font-weight:900;color:var(--verde);" id="statTotal">0</div><div style="font-size:9px;color:var(--cinza-texto);font-weight:700;">Remédios</div></div>
+    <div style="flex:1;background:white;border-radius:14px;padding:11px;text-align:center;box-shadow:var(--sombra);"><div style="font-size:24px;font-weight:900;color:var(--laranja);" id="statTomados">0</div><div style="font-size:9px;color:var(--cinza-texto);font-weight:700;">Tomados</div></div>
+    <div style="flex:1;background:white;border-radius:14px;padding:11px;text-align:center;box-shadow:var(--sombra);"><div style="font-size:24px;font-weight:900;color:#ef4444;" id="statPendentes">0</div><div style="font-size:9px;color:var(--cinza-texto);font-weight:700;">Pendentes</div></div>
+  </div>
+  <div style="background:white;border-radius:16px;padding:13px;margin-bottom:12px;box-shadow:var(--sombra);">
+    <div style="font-size:13px;font-weight:800;color:var(--verde);margin-bottom:10px;">⚡ Acesso Rápido</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div onclick="irUsuarioSub('remedios')" style="background:var(--cinza);border-radius:13px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid transparent;">
+        <span style="font-size:28px;display:block;margin-bottom:5px;">💊</span><span style="font-size:12px;font-weight:800;">Meus Remédios</span>
+      </div>
+      <div onclick="irPara('agenda',document.querySelectorAll('.tab-btn')[1])" style="background:var(--cinza);border-radius:13px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid transparent;">
+        <span style="font-size:28px;display:block;margin-bottom:5px;">📅</span><span style="font-size:12px;font-weight:800;">Agenda</span>
+      </div>
+      <div onclick="irPara('receita',document.querySelectorAll('.tab-btn')[2])" style="background:var(--cinza);border-radius:13px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid transparent;">
+        <span style="font-size:28px;display:block;margin-bottom:5px;">📋</span><span style="font-size:12px;font-weight:800;">Receita</span>
+      </div>
+      <div onclick="irUsuarioSub('pacientes')" style="background:var(--cinza);border-radius:13px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid transparent;">
+        <span style="font-size:28px;display:block;margin-bottom:5px;">👥</span><span style="font-size:12px;font-weight:800;">Pacientes</span>
+      </div>
     </div>
   </div>
-  <div class="stats-row">
-    <div class="stat-box"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Remédios</div></div>
-    <div class="stat-box"><div class="stat-num" id="statTomados">0</div><div class="stat-label">Tomados hoje</div></div>
-    <div class="stat-box"><div class="stat-num" id="statPendentes">0</div><div class="stat-label">Pendentes</div></div>
+  <div id="dashProxConsulta" style="display:none;background:white;border-radius:16px;padding:13px;margin-bottom:12px;box-shadow:var(--sombra);">
+    <div style="font-size:13px;font-weight:800;color:var(--verde);margin-bottom:8px;">📅 Próxima Consulta</div>
+    <div id="dashConsultaInfo"></div>
   </div>
-  <div class="card">
-    <div class="card-titulo">💊 Meus Remédios Contínuos</div>
-    <div id="listaRemedios"><p class="vazio">Nenhum remédio cadastrado.<br>Adicione abaixo! 👇</p></div>
+  <div style="background:var(--verde-claro);border:2px solid var(--verde);border-radius:14px;padding:11px 14px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:var(--verde);margin-bottom:4px;">ℹ️ Sobre o PREVITA</div>
+    <div style="font-size:10px;color:var(--cinza-texto);font-weight:600;line-height:1.7;">App gratuito de controle de remédios e consultas.<br><strong style="color:#c2410c;">⚠️ Não substitui prescrição ou orientação médica.</strong></div>
   </div>
-  <button class="btn-verde" onclick="abrirModal()">➕ Adicionar Remédio</button>
-  <div class="rodape" style="margin-top:12px;">
-    ⚠️ Não substitui prescrição ou orientação médica.<br>
-    <strong>Desenvolvido por Wilson Foster</strong><br>ACS – UBS São Pedro | Santana de Parnaíba – SP<br>
-    CNPJ: 16.588.130/0001-27 | <a href="mailto:contato@fosterconstrucoes.com.br">contato@fosterconstrucoes.com.br</a>
+  <div style="text-align:center;font-size:9px;color:#9ca3af;padding:10px 12px;line-height:1.8;font-weight:600;background:white;border-radius:14px;box-shadow:var(--sombra);">
+    <strong style="color:#1a7a4a;">Desenvolvido por Wilson Foster</strong><br>ACS – UBS São Pedro | Santana de Parnaíba – SP
   </div>
 </div>
 
-<!-- AGENDA -->
 <div class="tela" id="tela-agenda">
   <div style="display:flex;gap:8px;margin:14px 0 12px;">
     <button onclick="mostrarSubAgenda('remedios')" id="subAbaR" style="flex:1;padding:10px;border-radius:10px;border:none;background:var(--verde);color:white;font-weight:800;font-family:Nunito,sans-serif;cursor:pointer;font-size:12px;">💊 Remédios</button>
@@ -431,7 +444,7 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 </div>
 
 <!-- ASSISTENTE -->
-<div class="tela" id="tela-ia">
+<div class="tela" id="tela-prev">
   <div class="card" style="margin-top:14px;">
     <div class="card-titulo">🤖 PREV – Assistente de Saúde</div>
     <div class="offline-badge">📴 Funciona 100% offline — sem internet!</div>
@@ -496,14 +509,12 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 
 <!-- NAV -->
 <nav class="nav-tabs">
-  <button class="tab-btn ativa" onclick="irPara('remedios',this)"><span class="icon">💊</span>Remédios</button>
+  <button class="tab-btn ativa" onclick="irPara('inicio',this)"><span class="icon">🏠</span>Início</button>
   <button class="tab-btn" onclick="irPara('agenda',this)"><span class="icon">📅</span>Agenda</button>
-  <button class="tab-btn" onclick="irPara('pacientes',this)"><span class="icon">👥</span>Pacientes</button>
-  <button class="tab-btn" onclick="irPara('membros',this)"><span class="icon">🏥</span>Membros</button>
   <button class="tab-btn" onclick="irPara('receita',this)"><span class="icon">📋</span>Receita</button>
   <button class="tab-btn" onclick="irPara('dicas',this)"><span class="icon">💡</span>Dicas</button>
   <button class="tab-btn" onclick="irPara('guia',this)"><span class="icon">📖</span>Guia</button>
-  <button class="tab-btn" onclick="irPara('ia',this)"><span class="icon">🤖</span>PREV</button>
+  <button class="tab-btn" onclick="irPara('prev',this)"><span class="icon">🤖</span>PREV</button>
   <button class="tab-btn" onclick="irPara('usuario',this)"><span class="icon">👤</span>Usuário</button>
 </nav>
 
@@ -701,6 +712,17 @@ function atualizarHeader(){
 }
 
 // ===== NAV =====
+function irUsuarioSub(sub){
+  irPara('usuario', document.querySelectorAll('.tab-btn')[6]);
+  setTimeout(()=>{
+    const painelSem=document.getElementById('painelSemPerfil');
+    const painelCom=document.getElementById('painelComPerfil');
+    if(sub==='remedios'&&painelSem&&painelSem.style.display!=='none'){
+      // Sem perfil — mostrar tela de remédios direto
+    }
+  },100);
+}
+
 function irPara(tela,btn){
   document.querySelectorAll('.tela').forEach(t=>t.classList.remove('ativa'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('ativa'));
@@ -1227,7 +1249,7 @@ function importarReceitaSelecionados() {
   renderRemedios(); atualizarHeader();
   mostrarToast('✅ ' + imp + ' remédio' + (imp!==1?'s':'') + ' adicionado' + (imp!==1?'s':'') + '!');
   limparReceita();
-  irPara('remedios', document.querySelectorAll('.tab-btn')[0]);
+  
 }
 
 function limparReceita() {
@@ -1247,6 +1269,21 @@ function registrarAcesso() {
     const el = document.getElementById('contadorAcessos');
     if(el) el.textContent = total.toLocaleString('pt-BR') + ' acessos neste dispositivo';
   } catch(e) {}
+}
+
+function atualizarDashboard(){
+  atualizarStats();
+  // Próxima consulta
+  const h=hoje();
+  const fut=consultas.filter(c=>c.data>=h).sort((a,b)=>a.data.localeCompare(b.data));
+  const dc=document.getElementById('dashProxConsulta');
+  const di=document.getElementById('dashConsultaInfo');
+  if(dc&&di&&fut.length){
+    dc.style.display='block';
+    const c=fut[0];
+    const d=new Date(c.data+'T12:00:00');
+    di.innerHTML='<div style="font-size:13px;font-weight:800;">'+c.tipo+'</div><div style="font-size:11px;color:var(--cinza-texto);font-weight:600;margin-top:3px;">'+(c.especialidade?'📋 '+c.especialidade+'<br>':'')+' 📅 '+d.getDate().toString().padStart(2,'0')+'/'+MESES[d.getMonth()]+(c.horario?' ⏰ '+c.horario:'')+'</div>';
+  } else if(dc) dc.style.display='none';
 }
 
 // ===== INIT =====
