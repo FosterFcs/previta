@@ -139,7 +139,7 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
 
 /* GUIA */
 .guia-secao{background:white;border-radius:14px;margin-bottom:10px;box-shadow:var(--sombra);overflow:hidden;}
-.guia-header{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;user-select:none;}
+.guia-header{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;user-select:none;-webkit-user-select:none;}
 .guia-icon-box{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
 .guia-titulo{flex:1;}
 .guia-titulo h3{font-size:15px;font-weight:800;}
@@ -357,7 +357,7 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
   <div class="card">
     <div class="card-titulo">📷 Fotografar Receita Física</div>
     <div style="font-size:12px;color:var(--cinza-texto);font-weight:600;margin-bottom:10px;">Tire uma foto da receita médica — o app identifica os remédios!</div>
-    <input type="file" id="receitaFotoInput" accept="image/*" capture="environment" style="display:none" onchange="previewReceitaFoto(this)">
+    <input type="file" id="receitaFotoInput" accept="image/*" capture="environment" style="display:none" onchange="previewReceitaFoto(this)" aria-label="Selecionar foto da receita médica">
     <button class="btn-verde" onclick="document.getElementById('receitaFotoInput').click()" style="margin-bottom:8px;">📷 Abrir Câmera / Galeria</button>
     <img id="receitaFotoPreview" style="display:none;width:100%;border-radius:10px;margin-top:8px;" alt="Receita">
     <div id="receitaFotoStatus" style="display:none;text-align:center;padding:10px;font-size:13px;font-weight:700;color:var(--verde);">📋 Foto carregada! Cole os nomes abaixo para processar.</div>
@@ -517,9 +517,9 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
     <div class="campo">
       <label>Período do dia</label>
       <div class="periodo-grid">
-        <div class="periodo-box manha" id="periodoManha" onclick="selecionarPeriodo('manha')"><span class="periodo-icon">🌅</span><span class="periodo-label">Manhã</span><span class="periodo-hora">06h – 11h</span></div>
-        <div class="periodo-box tarde" id="periodoTarde" onclick="selecionarPeriodo('tarde')"><span class="periodo-icon">☀️</span><span class="periodo-label">Tarde</span><span class="periodo-hora">12h – 17h</span></div>
-        <div class="periodo-box noite" id="periodoNoite" onclick="selecionarPeriodo('noite')"><span class="periodo-icon">🌙</span><span class="periodo-label">Noite</span><span class="periodo-hora">18h – 22h</span></div>
+        <div class="periodo-box manha" id="periodoManha" onclick="selecionarPeriodo('manha')" role="button" aria-label="Manhã: 6h às 11h" tabindex="0"><span class="periodo-icon">🌅</span><span class="periodo-label">Manhã</span><span class="periodo-hora">06h – 11h</span></div>
+        <div class="periodo-box tarde" id="periodoTarde" onclick="selecionarPeriodo('tarde')" role="button" aria-label="Tarde: 12h às 17h" tabindex="0"><span class="periodo-icon">☀️</span><span class="periodo-label">Tarde</span><span class="periodo-hora">12h – 17h</span></div>
+        <div class="periodo-box noite" id="periodoNoite" onclick="selecionarPeriodo('noite')" role="button" aria-label="Noite: 18h às 22h" tabindex="0"><span class="periodo-icon">🌙</span><span class="periodo-label">Noite</span><span class="periodo-hora">18h – 22h</span></div>
       </div>
     </div>
     <div class="campo"><label>Horários específicos (opcional)</label><div class="horarios-grid" id="horariosGrid"></div></div>
@@ -534,11 +534,11 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
     <button class="modal-fechar" onclick="fecharModalConsulta()">✕</button>
     <h2>🏥 Nova Consulta / Exame</h2>
     <div class="campo"><label>Tipo *</label>
-      <select id="cTipo"><option value="">Selecionar...</option><option>Consulta médica</option><option>Retorno médico</option><option>Exame de sangue</option><option>Exame de imagem</option><option>Fisioterapia</option><option>Dentista</option><option>Vacinação</option><option>Outro</option></select>
+      <select id="cTipo" title="Tipo de consulta" aria-label="Tipo de consulta"><option value="">Selecionar...</option><option>Consulta médica</option><option>Retorno médico</option><option>Exame de sangue</option><option>Exame de imagem</option><option>Fisioterapia</option><option>Dentista</option><option>Vacinação</option><option>Outro</option></select>
     </div>
     <div class="campo"><label>Especialidade / Descrição</label><input type="text" id="cEspecialidade" placeholder="Ex: Cardiologista, Glicemia..."></div>
-    <div class="campo"><label>Data *</label><input type="date" id="cData"></div>
-    <div class="campo"><label>Horário</label><input type="time" id="cHorario"></div>
+    <div class="campo"><label>Data *</label><input type="date" id="cData" aria-label="Data da consulta"></div>
+    <div class="campo"><label>Horário</label><input type="time" id="cHorario" aria-label="Horário da consulta"></div>
     <div class="campo"><label>Local / Unidade de Saúde</label><input type="text" id="cLocal" placeholder="Ex: UBS São Pedro..."></div>
     <div class="campo"><label>Observações</label><textarea id="cObs" placeholder="Preparo necessário..."></textarea></div>
     <button class="btn-verde" onclick="salvarConsulta()">💾 Salvar</button>
@@ -554,7 +554,7 @@ body{font-family:'Nunito',sans-serif;background:#f0f4f2;color:var(--texto);min-h
     <div class="campo"><label>Endereço</label><input type="text" id="pEnd" placeholder="Rua, número"></div>
     <div class="campo"><label>Telefone</label><input type="tel" id="pTel" placeholder="(11) 9 9999-9999"></div>
     <div class="campo"><label>Condição principal</label>
-      <select id="pCondicao">
+      <select id="pCondicao" title="Condição principal de saúde" aria-label="Condição principal de saúde">
         <option value="">Selecionar...</option>
         <option>Hipertensão</option><option>Diabetes Tipo 1</option><option>Diabetes Tipo 2</option>
         <option>Diabetes + Hipertensão</option><option>Hipotireoidismo</option><option>Hipertireoidismo</option>
